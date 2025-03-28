@@ -30,13 +30,21 @@ async function fetchWeather(lat, lon){
     DETAILS.textContent = "Température actuelle";
 }
 
-// callAPI function calls, on click, fetchCoordinates() and fetchWeather() 
+// callAPI function calls, on click, fetchCoordinates() and fetchWeather() and raises an error if the city is unknown.
 async function callApi(){
-    const results = await fetchCoordinates()
-    let cityLat = results.lat;
-    let cityLon = results.lon;
-    
-    fetchWeather(cityLat, cityLon);
-    CITYINPUT.value = "";
+    try {
+        const results = await fetchCoordinates()
+        let cityLat = results.lat;
+        let cityLon = results.lon;
+        fetchWeather(cityLat, cityLon);
+        CITYINPUT.value = "";
+    } catch (e){
+        CITYNAME.textContent = "Ville non trouvée";
+        DETAILS.textContent = "Vérifier le nom de la ville";
+        COORDINATES.textContent = "-";
+        TEMPERATURE.textContent = "-";
+    };    
 }
+    
+
 
